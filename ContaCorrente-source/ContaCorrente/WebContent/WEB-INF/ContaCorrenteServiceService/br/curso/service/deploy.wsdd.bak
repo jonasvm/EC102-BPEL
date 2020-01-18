@@ -1,0 +1,43 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from ContaCorrenteServiceService WSDL service -->
+
+  <service name="ContaCorrenteService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://service.curso.br"/>
+      <parameter name="wsdlServiceElement" value="ContaCorrenteServiceService"/>
+      <parameter name="schemaQualified" value="http://exception.curso.br,http://service.curso.br"/>
+      <parameter name="wsdlServicePort" value="ContaCorrenteService"/>
+      <parameter name="className" value="br.curso.service.ContaCorrenteServiceSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="ContaCorrenteService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="verificarSaldo" qname="operNS:verificarSaldo" xmlns:operNS="http://service.curso.br" returnQName="retNS:verificarSaldoReturn" xmlns:retNS="http://service.curso.br" returnType="rtns:double" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:numeroConta" xmlns:pns="http://service.curso.br" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="NumeroContaCorrenteInvalido" qname="fns:fault" xmlns:fns="http://service.curso.br" class="br.curso.exception.NumeroContaCorrenteInvalido" type="tns:NumeroContaCorrenteInvalido" xmlns:tns="http://exception.curso.br"/>
+      </operation>
+      <operation name="debitar" qname="operNS:debitar" xmlns:operNS="http://service.curso.br" returnQName="retNS:debitarReturn" xmlns:retNS="http://service.curso.br" returnType="rtns:double" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:numeroConta" xmlns:pns="http://service.curso.br" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:valor" xmlns:pns="http://service.curso.br" type="tns:double" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <fault name="NumeroContaCorrenteInvalido" qname="fns:fault" xmlns:fns="http://service.curso.br" class="br.curso.exception.NumeroContaCorrenteInvalido" type="tns:NumeroContaCorrenteInvalido" xmlns:tns="http://exception.curso.br"/>
+      </operation>
+      <parameter name="allowedMethods" value="verificarSaldo debitar"/>
+
+      <typeMapping
+        xmlns:ns="http://exception.curso.br"
+        qname="ns:NumeroContaCorrenteInvalido"
+        type="java:br.curso.exception.NumeroContaCorrenteInvalido"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

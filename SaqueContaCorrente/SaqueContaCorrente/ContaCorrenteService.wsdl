@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://service.curso.br" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://service.curso.br" xmlns:intf="http://service.curso.br" xmlns:tns1="http://exception.curso.br" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://service.curso.br" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://exception.curso.br"/>
+   <element name="verificarSaldo">
+    <complexType>
+     <sequence>
+      <element name="numeroConta" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="verificarSaldoResponse">
+    <complexType>
+     <sequence>
+      <element name="verificarSaldoReturn" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="fault" type="tns1:NumeroContaCorrenteInvalido"/>
+   <element name="debitar">
+    <complexType>
+     <sequence>
+      <element name="numeroConta" type="xsd:int"/>
+      <element name="valor" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="debitarResponse">
+    <complexType>
+     <sequence>
+      <element name="debitarReturn" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://exception.curso.br" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="NumeroContaCorrenteInvalido">
+    <sequence/>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="debitarRequest">
+
+      <wsdl:part element="impl:debitar" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="verificarSaldoRequest">
+
+      <wsdl:part element="impl:verificarSaldo" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="NumeroContaCorrenteInvalido">
+
+      <wsdl:part element="impl:fault" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="debitarResponse">
+
+      <wsdl:part element="impl:debitarResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="verificarSaldoResponse">
+
+      <wsdl:part element="impl:verificarSaldoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ContaCorrenteService">
+
+      <wsdl:operation name="verificarSaldo">
+
+         <wsdl:input message="impl:verificarSaldoRequest" name="verificarSaldoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:verificarSaldoResponse" name="verificarSaldoResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:NumeroContaCorrenteInvalido" name="NumeroContaCorrenteInvalido">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="debitar">
+
+         <wsdl:input message="impl:debitarRequest" name="debitarRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:debitarResponse" name="debitarResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:NumeroContaCorrenteInvalido" name="NumeroContaCorrenteInvalido">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ContaCorrenteServiceSoapBinding" type="impl:ContaCorrenteService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="verificarSaldo">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="verificarSaldoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="verificarSaldoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="NumeroContaCorrenteInvalido">
+
+            <wsdlsoap:fault name="NumeroContaCorrenteInvalido" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="debitar">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="debitarRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="debitarResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="NumeroContaCorrenteInvalido">
+
+            <wsdlsoap:fault name="NumeroContaCorrenteInvalido" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ContaCorrenteServiceService">
+
+      <wsdl:port binding="impl:ContaCorrenteServiceSoapBinding" name="ContaCorrenteService">
+
+         <wsdlsoap:address location="http://localhost:8080/ContaCorrente/services/ContaCorrenteService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

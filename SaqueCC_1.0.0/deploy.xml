@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:sample="http://wso2.org/bps/sample" xmlns:service.curso.br="http://service.curso.br">
+  <process name="sample:SaqueCC">
+    <active>true</active>
+    <retired>false</retired>
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="sample:SaqueCC" port="SaqueCCPort"/>
+    </provide>
+    <invoke partnerLink="SaqueContaCorrentePL">
+      <service name="service.curso.br:ContaCorrenteServiceService" port="ContaCorrenteService"/>
+    </invoke>
+  </process>
+</deploy>
